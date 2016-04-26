@@ -1,1 +1,1 @@
-start: ls
+start: python prog.py
