@@ -49,7 +49,7 @@ def start(bot, update):
 def set(bot, update):
     """ Adds a job to the queue """
     chat_id = update.message.chat_id
-    bot.sendMessage(chat_id,text=str((date.today() - holidays.passover()).days))
+    bot.sendMessage(chat_id,text=str((date.today() - date(*(holidays.passover()))).days))
     return
     try:
         # args[0] should contain the time for the timer in seconds
