@@ -28,6 +28,8 @@ For a description of the Bot API, see this page: https://core.telegram.org/bots/
 from telegram.ext import Updater, CommandHandler
 import logging
 
+from convertdate import holidays
+from datetime import date
 # Enable logging
 logging.basicConfig(
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -47,7 +49,7 @@ def start(bot, update):
 def set(bot, update):
     """ Adds a job to the queue """
     chat_id = update.message.chat_id
-    bot.sendMessage(chat_id,text="aaa")
+    bot.sendMessage(chat_id,text=str((date.today() - holidays.passover()).days))
     return
     try:
         # args[0] should contain the time for the timer in seconds
