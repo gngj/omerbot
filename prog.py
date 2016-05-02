@@ -47,6 +47,8 @@ def start(bot, update):
 def set(bot, update, args):
     """ Adds a job to the queue """
     chat_id = update.message.chat_id
+    bot.sendMessage(chat_id,text="aaa")
+    return
     try:
         # args[0] should contain the time for the timer in seconds
         due = int(args[0])
@@ -93,7 +95,9 @@ def main():
     # Block until the you presses Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
-    updater.idle()
+    import time
+    time.sleep(60 * 20)
+    #updater.idle()
 
 if __name__ == '__main__':
     main()
