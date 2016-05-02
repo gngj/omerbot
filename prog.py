@@ -44,7 +44,7 @@ def start(bot, update):
                                                  'set a timer')
 
 
-def set(bot, update, args):
+def set(bot, update):
     """ Adds a job to the queue """
     chat_id = update.message.chat_id
     bot.sendMessage(chat_id,text="aaa")
