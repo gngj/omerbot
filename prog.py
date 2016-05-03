@@ -50,7 +50,7 @@ def set(bot, update):
     """ Adds a job to the queue """
     try:
         chat_id = update.message.chat_id
-        bot.sendMessage(chat_id,text=str((date.today() - date(*(holidays.passover()))).days))
+        bot.sendMessage(chat_id,text=str((date.today() - date(*(holidays.passover(2016)))).days))
     except:
         bot.sendMessage(chat_id, text=str(sys.exc_info()))
     return
