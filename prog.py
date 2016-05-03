@@ -24,8 +24,15 @@ Use this token to access the HTTP API:
 
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 """
+from uuid import uuid4
 
-from telegram.ext import Updater, CommandHandler
+import re
+
+from telegram import InlineQueryResultArticle, ParseMode, \
+    InputTextMessageContent
+
+from telegram.ext import Updater, CommandHandler, InlineQueryHandler
+
 import logging
 import sys
 from convertdate import holidays
@@ -72,6 +79,36 @@ def set(bot, update):
     except ValueError:
         bot.sendMessage(chat_id, text='Usage: /set <seconds>')
 
+def escape_markdown(text):
+    """Helper function to escape telegram markup symbols"""
+    escape_chars = '\*_`\['
+    return re.sub(r'([%s])' % escape_chars, r'\\\1', text)
+
+
+def inlinequery(bot, update):
+    query = update.inline_query.query
+    results = list()
+
+    results.append(InlineQueryResultArticle(
+            id=uuid4(),
+            title="Caps",
+            input_message_content=InputTextMessageContent(query.upper())))
+
+    results.append(InlineQueryResultArticle(
+            id=uuid4(),
+            title="Bold",
+            input_message_content=InputTextMessageContent(
+                "*%s*" % escape_markdown(query),
+                parse_mode=ParseMode.MARKDOWN)))
+
+    results.append(InlineQueryResultArticle(
+            id=uuid4(),
+            title="Italic",
+            input_message_content=InputTextMessageContent(
+                "_%s_" % escape_markdown(query),
+                parse_mode=ParseMode.MARKDOWN)))
+
+    bot.answerInlineQuery(update.inline_query.id, results=results)
 
 def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
@@ -90,6 +127,7 @@ def main():
     dp.addHandler(CommandHandler("start", start))
     dp.addHandler(CommandHandler("help", start))
     dp.addHandler(CommandHandler("set", set))
+    dp.addHandler(InlineQueryHandler(inlinequery))
 
     # log all errors
     dp.addErrorHandler(error)
