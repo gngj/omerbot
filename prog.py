@@ -24,6 +24,7 @@ Use this token to access the HTTP API:
 
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 """
+print "aaa"
 from uuid import uuid4
 
 import re
