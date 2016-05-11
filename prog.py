@@ -32,7 +32,9 @@ from telegram import InlineQueryResultArticle, ParseMode, \
     InputTextMessageContent
 
 from telegram.ext import Updater, CommandHandler, InlineQueryHandler
-
+from telegram import Update
+from future.utils import bytes_to_native_str
+import json
 import logging
 import sys
 from convertdate import holidays
@@ -102,7 +104,18 @@ def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
 
 
-def main():
+def application(environ, start_response):
+
+    # the environment variable CONTENT_LENGTH may be empty or missing
+    try:
+        request_body_size = int(environ.get('CONTENT_LENGTH', 0))
+    except (ValueError):
+        request_body_size = 0
+
+    # When the method is POST the variable will be sent
+    # in the HTTP request body which is passed by the WSGI server
+    # in the file like wsgi.input environment variable.
+    buf = environ['wsgi.input'].read(request_body_size)
     global job_queue
 
     updater = Updater("207443777:AAGuMP5nIJMqbFKILRmVuuAz8in7PfiWdjA")
@@ -121,14 +134,22 @@ def main():
     dp.addErrorHandler(error)
 
     # Start the Bot
-    updater.start_polling()
+    #updater.start_polling()
+    
+    json_string = bytes_to_native_str(buf)
 
+    update = Update.de_json(json.loads(json_string))
+    update_queue.put(update)
+
+    start_response('200 OK', [('Content-Type', 'text/plain')])
+    return ['']
     # Block until the you presses Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
     import time
-    time.sleep(60 * 20)
+    #time.sleep(60 * 20)
     #updater.idle()
 
 if __name__ == '__main__':
-    main()
+    #main()
+    pass
