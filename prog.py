@@ -24,7 +24,6 @@ Use this token to access the HTTP API:
 
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 """
-print "aaa"
 from uuid import uuid4
 
 import re
@@ -33,11 +32,8 @@ from telegram import InlineQueryResultArticle, ParseMode, \
     InputTextMessageContent
 
 from telegram.ext import Updater, CommandHandler, InlineQueryHandler
-print "bbb"
 from telegram import Update
-print "ccc"
 from future.utils import bytes_to_native_str
-print "ddd"
 import json
 import logging
 import sys
@@ -51,7 +47,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 job_queue = None
 
-print "eee"
 # Define a few command handlers. These usually take the two arguments bot and
 # update. Error handlers also receive the raised TelegramError object in error.
 def start(bot, update):
@@ -107,7 +102,7 @@ def inlinequery(bot, update):
 def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
 
-print " fff"
+
 def application(environ, start_response):
     print "app"
     # the environment variable CONTENT_LENGTH may be empty or missing
@@ -136,7 +131,8 @@ def application(environ, start_response):
 
     # log all errors
     dp.addErrorHandler(error)
-
+  
+    updater.bot.setWebhook("https://afternoon-shelf-83103.herokuapp.com")
     # Start the Bot
     #updater.start_polling()
     
@@ -153,7 +149,7 @@ def application(environ, start_response):
     import time
     #time.sleep(60 * 20)
     #updater.idle()
-print "ggg"
+
 if __name__ == '__main__':
     #main()
     pass
