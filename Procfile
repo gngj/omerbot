@@ -1,1 +1,1 @@
-start: python prog.py
+web: python prog.py
