@@ -139,7 +139,7 @@ def application(environ, start_response):
     json_string = bytes_to_native_str(buf)
 
     update = Update.de_json(json.loads(json_string))
-    update_queue.put(update)
+    updater.update_queue.put(update)
 
     start_response('200 OK', [('Content-Type', 'text/plain')])
     return ['']
