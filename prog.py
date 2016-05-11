@@ -33,8 +33,11 @@ from telegram import InlineQueryResultArticle, ParseMode, \
     InputTextMessageContent
 
 from telegram.ext import Updater, CommandHandler, InlineQueryHandler
+print "bbb"
 from telegram import Update
+print "ccc"
 from future.utils import bytes_to_native_str
+print "ddd"
 import json
 import logging
 import sys
@@ -48,7 +51,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 job_queue = None
 
-
+print "eee"
 # Define a few command handlers. These usually take the two arguments bot and
 # update. Error handlers also receive the raised TelegramError object in error.
 def start(bot, update):
@@ -104,9 +107,9 @@ def inlinequery(bot, update):
 def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
 
-
+print " fff"
 def application(environ, start_response):
-
+    print "app"
     # the environment variable CONTENT_LENGTH may be empty or missing
     try:
         request_body_size = int(environ.get('CONTENT_LENGTH', 0))
@@ -150,7 +153,7 @@ def application(environ, start_response):
     import time
     #time.sleep(60 * 20)
     #updater.idle()
-
+print "ggg"
 if __name__ == '__main__':
     #main()
     pass
