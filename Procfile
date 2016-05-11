@@ -1,1 +1,1 @@
-web: python prog.py
+web: gunicorn prog:aplication
